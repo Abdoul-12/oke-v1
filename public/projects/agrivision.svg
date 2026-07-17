@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-label="Illustration AgriVision">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#BFDBFE"/>
+      <stop offset=".66" stop-color="#F8FAFC"/>
+      <stop offset=".67" stop-color="#86EFAC"/>
+      <stop offset="1" stop-color="#15803D"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="360" fill="url(#sky)"/>
+  <path d="M0 272c104-34 190-34 286 0s190 34 434-10v98H0z" fill="#166534" opacity=".75"/>
+  <path d="M0 305c105-22 220-20 342 5 104 21 216 13 378-27v77H0z" fill="#052E16" opacity=".35"/>
+  <g transform="translate(360 154)">
+    <rect x="-72" y="-10" width="144" height="20" rx="10" fill="#111827"/>
+    <rect x="-22" y="-22" width="44" height="44" rx="8" fill="#334155"/>
+    <circle cx="-118" cy="0" r="28" fill="none" stroke="#111827" stroke-width="8"/>
+    <circle cx="118" cy="0" r="28" fill="none" stroke="#111827" stroke-width="8"/>
+    <circle cx="-118" cy="0" r="10" fill="#22C55E"/>
+    <circle cx="118" cy="0" r="10" fill="#22C55E"/>
+    <path d="M-88 10-128 86M88 10l40 76" stroke="#111827" stroke-width="8" stroke-linecap="round"/>
+    <path d="M-44 22-82 92M44 22l38 70" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <circle cx="106" cy="70" r="34" fill="white" opacity=".75"/>
+  <circle cx="146" cy="76" r="22" fill="white" opacity=".75"/>
+  <circle cx="579" cy="86" r="28" fill="white" opacity=".65"/>
+  <circle cx="612" cy="91" r="20" fill="white" opacity=".65"/>
+</svg>
