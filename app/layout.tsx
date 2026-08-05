@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import Navbar from "@/components/layout/Navbar"
-import Footer from "@/components/layout/Footer"
+import AppChrome from "@/components/layout/AppChrome"
 
 export const metadata: Metadata = {
   title: "OkeTech — Élevons les développeurs africains au sommet",
@@ -16,11 +15,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className="bg-slate-50 min-h-screen flex flex-col">
-        <Navbar />
-        <div className="flex-1">
-          {children}
-        </div>
-        <Footer />
+        <AppChrome>{children}</AppChrome>
       </body>
     </html>
   )

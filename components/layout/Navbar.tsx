@@ -2,9 +2,11 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+import { dashboardParRole, isRoleUtilisateur, type RoleUtilisateur } from "@/lib/auth/roles"
 
-const navigation = [
+const liens = [
   { href: "/projets", label: "Projets" },
   { href: "/developpeurs", label: "Développeurs" },
   { href: "/investisseurs", label: "Investisseurs" },
@@ -12,123 +14,161 @@ const navigation = [
   { href: "/a-propos", label: "À propos" },
 ]
 
-function Logo() {
-  return (
-    <span className="flex items-center gap-2">
-      <span className="grid h-8 w-8 place-items-center rounded-full border-2 border-[#16A34A] text-[#16A34A]">
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
-          <path
-            d="M12 3.5 15 6l3.8-.2.7 3.8L22 12l-2.5 2.4-.7 3.8-3.8-.2-3 2.5L9 18l-3.8.2-.7-3.8L2 12l2.5-2.4.7-3.8L9 6l3-2.5Z"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinejoin="round"
-          />
-          <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="2" />
-        </svg>
-      </span>
-      <span className="text-2xl font-black tracking-[-0.02em] text-[#0F172A]">
-        Oke<span className="text-[#16A34A]">Tech</span>
-      </span>
-    </span>
-  )
-}
+const boutonBase =
+  "inline-flex h-11 min-w-36 items-center justify-center rounded-lg px-6 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2"
+
+const boutonConnexion =
+  `${boutonBase} border border-primary bg-white text-primary shadow-sm hover:bg-primary hover:text-white hover:shadow-md`
+
+const boutonInscription =
+  `${boutonBase} bg-primary text-white shadow-sm shadow-primary/20 hover:bg-[#0c7468] hover:shadow-md hover:shadow-primary/25`
 
 export default function Navbar() {
   const pathname = usePathname()
   const [menuOuvert, setMenuOuvert] = useState(false)
+  const [role, setRole] = useState<RoleUtilisateur | null>(null)
+  const [sessionChargee, setSessionChargee] = useState(false)
+  const pagePrivee =
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/profil") ||
+    pathname.startsWith("/messagerie") ||
+    pathname.startsWith("/paiement")
 
-  const linkClass = (href: string) =>
-    `text-sm font-semibold transition-colors ${
-      pathname === href ? "text-[#16A34A]" : "text-[#111827] hover:text-[#16A34A]"
-    }`
+  useEffect(() => {
+    let actif = true
+
+    async function chargerSession() {
+      const supabase = createClient()
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
+      if (!actif) return
+
+      if (!user) {
+        setRole(null)
+        setSessionChargee(true)
+        return
+      }
+
+      const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
+      setRole(isRoleUtilisateur(profile?.role) ? profile.role : null)
+      setSessionChargee(true)
+    }
+
+    void chargerSession()
+
+    return () => {
+      actif = false
+    }
+  }, [pathname])
+
+  const dashboardHref = role ? dashboardParRole(role) : "/connexion"
+  const connecte = Boolean(role)
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
-      <nav className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
-        <Link
-          href="/"
-          className="shrink-0 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16A34A] focus-visible:ring-offset-4"
-          aria-label="OkeTech - Accueil"
-          onClick={() => setMenuOuvert(false)}
-        >
-          <Logo />
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-white/95 shadow-sm shadow-slate-900/5 backdrop-blur">
+      <nav
+        className="mx-auto flex h-[72px] w-full max-w-[1520px] items-center justify-between px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-16"
+        aria-label="Navigation principale"
+      >
+        <Link href="/" className="group flex items-center gap-2" aria-label="Accueil OkeTech">
+          <span className="flex h-9 w-11 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white shadow-sm shadow-primary/25 transition-transform duration-200 group-hover:-translate-y-0.5">
+            OKE
+          </span>
+          <span className="text-xl font-bold text-dark">Tech</span>
         </Link>
 
-        <div className="hidden items-center gap-10 md:flex">
-          {navigation.map((item) => (
-            <Link key={item.href} href={item.href} className={linkClass(item.href)}>
-              {item.label}
-            </Link>
+        <ul className="hidden items-center gap-9 md:flex">
+          {liens.map((lien) => (
+            <li key={lien.href}>
+              <Link
+                href={lien.href}
+                className="relative inline-flex py-2 text-sm font-semibold text-muted transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-primary after:transition-all after:duration-200 hover:text-primary hover:after:w-full"
+              >
+                {lien.label}
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div className="hidden items-center gap-4 md:flex">
-          <Link
-            href="/connexion"
-            className="inline-flex h-11 min-w-32 items-center justify-center rounded-md border border-[#16A34A] px-5 text-sm font-bold text-[#15803D] transition-colors hover:bg-[#F0FDF4]"
-          >
-            Se connecter
-          </Link>
-          <Link
-            href="/inscription"
-            className="inline-flex h-11 min-w-32 items-center justify-center rounded-md bg-[#15803D] px-5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#166534]"
-          >
-            S&apos;inscrire
-          </Link>
-        </div>
+        {pagePrivee || !sessionChargee ? (
+          <div className="hidden min-w-[304px] md:block" aria-hidden="true" />
+        ) : connecte ? (
+          <div className="hidden items-center gap-4 md:flex">
+            <Link href={dashboardHref} className={boutonInscription}>
+              Mon espace
+            </Link>
+          </div>
+        ) : (
+          <div className="hidden items-center gap-4 md:flex">
+            <Link href="/connexion" className={boutonConnexion}>
+              Se connecter
+            </Link>
+            <Link href="/inscription" className={boutonInscription}>
+              S&apos;inscrire
+            </Link>
+          </div>
+        )}
 
         <button
           type="button"
-          className="grid h-11 w-11 place-items-center rounded-md text-slate-900 transition-colors hover:bg-slate-100 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-white text-dark shadow-sm transition-colors hover:border-primary hover:text-primary md:hidden"
+          onClick={() => setMenuOuvert((ouvert) => !ouvert)}
           aria-label={menuOuvert ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={menuOuvert}
-          aria-controls="menu-mobile"
-          onClick={() => setMenuOuvert((ouvert) => !ouvert)}
         >
-          <span className="sr-only">{menuOuvert ? "Fermer le menu" : "Ouvrir le menu"}</span>
-          {menuOuvert ? (
-            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" aria-hidden="true">
-              <path d="M6 6l12 12M18 6 6 18" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          )}
+          <span className="text-xl leading-none">{menuOuvert ? "×" : "☰"}</span>
         </button>
       </nav>
 
       {menuOuvert && (
-        <div id="menu-mobile" className="border-t border-slate-200 bg-white px-5 py-5 shadow-lg md:hidden">
-          <div className="grid gap-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`rounded-md px-3 py-3 text-sm font-semibold ${
-                  pathname === item.href ? "bg-[#F0FDF4] text-[#16A34A]" : "text-slate-900"
-                }`}
-                onClick={() => setMenuOuvert(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-          <div className="mt-4 grid gap-3 border-t border-slate-100 pt-4">
-            <Link
-              href="/connexion"
-              className="inline-flex h-11 items-center justify-center rounded-md border border-[#16A34A] text-sm font-bold text-[#15803D]"
-              onClick={() => setMenuOuvert(false)}
-            >
-              Se connecter
-            </Link>
-            <Link
-              href="/inscription"
-              className="inline-flex h-11 items-center justify-center rounded-md bg-[#15803D] text-sm font-bold text-white"
-              onClick={() => setMenuOuvert(false)}
-            >
-              S&apos;inscrire
-            </Link>
+        <div className="border-t border-border bg-white shadow-lg shadow-slate-900/5 md:hidden">
+          <div className="mx-auto w-full max-w-[1520px] px-6 py-5 sm:px-8 md:px-12 lg:px-12 2xl:px-16">
+            <ul className="flex flex-col gap-4" aria-label="Navigation mobile">
+              {liens.map((lien) => (
+                <li key={lien.href}>
+                  <Link
+                    href={lien.href}
+                    className="flex min-h-10 items-center rounded-lg px-3 text-sm font-semibold text-muted transition-colors hover:bg-primary/10 hover:text-primary"
+                    onClick={() => setMenuOuvert(false)}
+                  >
+                    {lien.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {!pagePrivee && connecte && (
+              <div className="mt-5 grid gap-3 border-t border-border pt-5">
+                <Link
+                  href={dashboardHref}
+                  className={`${boutonInscription} w-full`}
+                  onClick={() => setMenuOuvert(false)}
+                >
+                  Mon espace
+                </Link>
+              </div>
+            )}
+
+            {!pagePrivee && !connecte && sessionChargee && (
+              <div className="mt-5 grid gap-3 border-t border-border pt-5">
+                <Link
+                  href="/connexion"
+                  className={`${boutonConnexion} w-full`}
+                  onClick={() => setMenuOuvert(false)}
+                >
+                  Se connecter
+                </Link>
+                <Link
+                  href="/inscription"
+                  className={`${boutonInscription} w-full`}
+                  onClick={() => setMenuOuvert(false)}
+                >
+                  S&apos;inscrire
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
