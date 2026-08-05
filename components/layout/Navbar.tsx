@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { dashboardParRole, isRoleUtilisateur, type RoleUtilisateur } from "@/lib/auth/roles"
+import { isSupabaseConfigured } from "@/lib/supabase/config"
 
 const liens = [
   { href: "/projets", label: "Projets" },
@@ -38,22 +39,37 @@ export default function Navbar() {
     let actif = true
 
     async function chargerSession() {
-      const supabase = createClient()
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
+      try {
+        if (!isSupabaseConfigured()) {
+          if (actif) {
+            setRole(null)
+            setSessionChargee(true)
+          }
+          return
+        }
 
-      if (!actif) return
+        const supabase = createClient()
+        const {
+          data: { user },
+        } = await supabase.auth.getUser()
 
-      if (!user) {
-        setRole(null)
+        if (!actif) return
+
+        if (!user) {
+          setRole(null)
+          setSessionChargee(true)
+          return
+        }
+
+        const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
+        setRole(isRoleUtilisateur(profile?.role) ? profile.role : null)
         setSessionChargee(true)
-        return
+      } catch {
+        if (actif) {
+          setRole(null)
+          setSessionChargee(true)
+        }
       }
-
-      const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
-      setRole(isRoleUtilisateur(profile?.role) ? profile.role : null)
-      setSessionChargee(true)
     }
 
     void chargerSession()

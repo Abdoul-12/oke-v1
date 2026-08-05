@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { dashboardParRole, isRoleUtilisateur, type RoleUtilisateur } from "@/lib/auth/roles"
 import { createClient } from "@/lib/supabase/client"
+import { isSupabaseConfigured } from "@/lib/supabase/config"
 
 interface PublicAuthLinkProps {
   className: string
@@ -25,21 +26,33 @@ export default function PublicAuthLink({
     let actif = true
 
     async function chargerSession() {
-      const supabase = createClient()
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
+      try {
+        if (!isSupabaseConfigured()) {
+          if (actif) setCharge(true)
+          return
+        }
 
-      if (!actif) return
+        const supabase = createClient()
+        const {
+          data: { user },
+        } = await supabase.auth.getUser()
 
-      if (!user) {
+        if (!actif) return
+
+        if (!user) {
+          setCharge(true)
+          return
+        }
+
+        const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
+        setRole(isRoleUtilisateur(profile?.role) ? profile.role : null)
         setCharge(true)
-        return
+      } catch {
+        if (actif) {
+          setRole(null)
+          setCharge(true)
+        }
       }
-
-      const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
-      setRole(isRoleUtilisateur(profile?.role) ? profile.role : null)
-      setCharge(true)
     }
 
     void chargerSession()
