@@ -235,7 +235,7 @@ export default function PaiementPage() {
 
   return (
     <main className="bg-light">
-      <section className="mx-auto grid w-full max-w-[1320px] gap-8 px-6 py-10 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 lg:py-12 2xl:px-16">
+      <section className="mx-auto grid w-full max-w-[1480px] gap-8 px-6 py-10 sm:px-8 lg:grid-cols-[1fr_420px] lg:px-12 lg:py-12 2xl:px-20">
         <div>
           <Link href={projet ? `/projets/${projet.id}` : offrePaiement.retour} className="text-sm font-semibold text-muted transition-colors hover:text-primary">
             ← Retour

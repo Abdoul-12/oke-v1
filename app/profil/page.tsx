@@ -280,7 +280,7 @@ export default function ProfilPage() {
   return (
     <main className="bg-light">
       <section className="bg-white">
-        <div className="mx-auto w-full max-w-[1520px] px-6 py-8 sm:px-8 lg:px-12 2xl:px-16">
+        <div className="mx-auto w-full max-w-[1760px] px-6 py-8 sm:px-8 lg:px-12 2xl:px-20">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex items-center gap-5">
               <ProfilAvatar
@@ -341,7 +341,7 @@ export default function ProfilPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-[1520px] gap-6 px-6 py-5 sm:px-8 lg:grid-cols-[1fr_430px] lg:px-12 2xl:px-16">
+      <section className="mx-auto grid w-full max-w-[1760px] gap-6 px-6 py-5 sm:px-8 lg:grid-cols-[1fr_430px] lg:px-12 2xl:px-20">
         <div className="space-y-5">
           {message && <div className="rounded-xl border border-primary/20 bg-primary/10 px-5 py-4 text-sm font-semibold text-primary">{message}</div>}
           {chargement && <div className="rounded-xl border border-border bg-white p-5 text-sm text-muted shadow-sm">Chargement du profil...</div>}

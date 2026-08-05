@@ -142,7 +142,7 @@ export default function ProjetsPage() {
 
   return (
     <main className="min-h-screen bg-light">
-      <div className="mx-auto grid w-full max-w-[1520px] gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[260px_1fr] lg:px-12 lg:py-[60px] 2xl:px-16">
+      <div className="mx-auto grid w-full max-w-[1760px] gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[260px_1fr] lg:px-12 lg:py-[60px] 2xl:px-20">
         <aside className="rounded-xl border border-border bg-white px-5 py-6 shadow-sm lg:min-h-[760px]">
           <div className="flex items-center justify-between gap-4">
             <h1 className="text-lg font-bold text-dark">Filtres</h1>

@@ -69,7 +69,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-white/95 shadow-sm shadow-slate-900/5 backdrop-blur">
       <nav
-        className="mx-auto flex h-[72px] w-full max-w-[1520px] items-center justify-between px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-16"
+        className="mx-auto flex h-[72px] w-full max-w-[1760px] items-center justify-between px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-20"
         aria-label="Navigation principale"
       >
         <Link href="/" className="group flex items-center gap-2" aria-label="Accueil OkeTech">
@@ -124,7 +124,7 @@ export default function Navbar() {
 
       {menuOuvert && (
         <div className="border-t border-border bg-white shadow-lg shadow-slate-900/5 md:hidden">
-          <div className="mx-auto w-full max-w-[1520px] px-6 py-5 sm:px-8 md:px-12 lg:px-12 2xl:px-16">
+          <div className="mx-auto w-full max-w-[1760px] px-6 py-5 sm:px-8 md:px-12 lg:px-12 2xl:px-20">
             <ul className="flex flex-col gap-4" aria-label="Navigation mobile">
               {liens.map((lien) => (
                 <li key={lien.href}>

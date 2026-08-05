@@ -123,7 +123,7 @@ export default async function ProjetDetailPage({ params }: ProjetDetailPageProps
 
   return (
     <main className="bg-light">
-      <div className="mx-auto grid w-full max-w-[1520px] gap-8 px-6 py-8 sm:px-8 lg:grid-cols-[1fr_410px] lg:px-12 2xl:px-16">
+      <div className="mx-auto grid w-full max-w-[1760px] gap-8 px-6 py-8 sm:px-8 lg:grid-cols-[1fr_410px] lg:px-12 2xl:px-20">
         <section className="min-w-0">
           <nav className="text-xs text-muted" aria-label="Fil d'Ariane">
             <Link href="/projets" className="transition-colors hover:text-primary">

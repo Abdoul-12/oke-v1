@@ -129,7 +129,7 @@ export default async function InvestisseursPage() {
       </section>
 
       <section className="border-b border-border bg-white px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-[1520px] grid-cols-2 divide-x divide-border py-5 md:grid-cols-4">
+        <div className="mx-auto grid max-w-[1760px] grid-cols-2 divide-x divide-border py-5 md:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label} className="px-4 py-2 text-center">
               <p className="text-lg font-bold text-primary">{stat.value}</p>
@@ -140,7 +140,7 @@ export default async function InvestisseursPage() {
       </section>
 
       <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1520px]">
+        <div className="mx-auto max-w-[1760px]">
           <div className="text-center">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
               Vos avantages
@@ -172,7 +172,7 @@ export default async function InvestisseursPage() {
       </section>
 
       <section className="bg-light px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1520px]">
+        <div className="mx-auto max-w-[1760px]">
           <div className="text-center">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
               Investisseurs inscrits
@@ -247,7 +247,7 @@ export default async function InvestisseursPage() {
       </section>
 
       <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1520px]">
+        <div className="mx-auto max-w-[1760px]">
           <div className="text-center">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
               Projets disponibles
@@ -304,7 +304,7 @@ export default async function InvestisseursPage() {
       </section>
 
       <section className="bg-primary px-4 py-8 text-white sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-[1520px] flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
+        <div className="mx-auto flex max-w-[1760px] flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
           <p className="text-base font-semibold sm:text-lg">
             Rejoins OkeTech et commence à investir dans l&apos;avenir africain
           </p>

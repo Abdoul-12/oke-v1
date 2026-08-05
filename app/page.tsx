@@ -100,7 +100,7 @@ export default async function Home() {
   return (
     <main className="bg-white">
       <section className="bg-dark text-white">
-        <div className="mx-auto grid w-full max-w-[1520px] items-center gap-10 px-6 py-10 sm:px-8 sm:py-12 md:px-12 lg:grid-cols-[1.05fr_0.95fr] lg:px-12 2xl:px-16 lg:py-14">
+        <div className="mx-auto grid w-full max-w-[1760px] items-center gap-10 px-6 py-10 sm:px-8 sm:py-12 md:px-12 lg:grid-cols-[1.05fr_0.95fr] lg:px-12 2xl:px-20 lg:py-14">
           <div>
             <h1 className="mt-3 max-w-[620px] text-3xl font-extrabold leading-tight tracking-normal text-white sm:text-4xl lg:text-5xl">
               Des talents africains visibles. Des projets enfin finançables.
@@ -174,7 +174,7 @@ export default async function Home() {
       </section>
 
       <section className="bg-white py-14 md:py-16">
-        <div className="mx-auto w-full max-w-[1520px] px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-16">
+        <div className="mx-auto w-full max-w-[1760px] px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-20">
           <div className="text-center">
             <h2 className="mt-4 text-[28px] font-extrabold leading-tight text-dark md:text-[29px]">Pourquoi OkeTech existe</h2>
           </div>
@@ -194,7 +194,7 @@ export default async function Home() {
       </section>
 
       <section className="bg-light py-14 md:py-16">
-        <div className="mx-auto w-full max-w-[1520px] px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-16">
+        <div className="mx-auto w-full max-w-[1760px] px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-20">
           <div className="text-center">
             <h2 className="mt-4 text-[28px] font-extrabold leading-tight text-dark md:text-[29px]">Comment ça marche</h2>
           </div>
@@ -215,7 +215,7 @@ export default async function Home() {
       </section>
 
       <section className="bg-white py-14 md:py-9">
-        <div className="mx-auto w-full max-w-[1520px] px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-16">
+        <div className="mx-auto w-full max-w-[1760px] px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-20">
           <div className="text-center">
             <h2 className="mt-4 text-[28px] font-extrabold leading-tight text-dark md:text-[29px]">Une plateforme pour tous</h2>
           </div>
@@ -254,7 +254,7 @@ export default async function Home() {
       </section>
 
       <section className="bg-light py-14 md:py-16">
-        <div className="mx-auto w-full max-w-[1520px] px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-16">
+        <div className="mx-auto w-full max-w-[1760px] px-6 sm:px-8 md:px-12 lg:px-12 2xl:px-20">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="mt-2 text-[28px] font-extrabold leading-tight text-dark md:text-[29px]">Découvrez les projets prometteurs</h2>
@@ -329,7 +329,7 @@ export default async function Home() {
       </section>
 
       <section className="bg-dark py-14 text-white md:py-16">
-        <div className="mx-auto grid w-full max-w-[1520px] gap-10 px-6 text-center sm:grid-cols-2 sm:px-8 md:px-12 lg:grid-cols-4 lg:px-12 2xl:px-16">
+        <div className="mx-auto grid w-full max-w-[1760px] gap-10 px-6 text-center sm:grid-cols-2 sm:px-8 md:px-12 lg:grid-cols-4 lg:px-12 2xl:px-20">
           {chiffres.map((chiffre) => (
             <div key={chiffre.label}>
               <p className="text-[34px] font-extrabold leading-none text-primary md:text-[40px]">{chiffre.valeur}</p>
@@ -341,7 +341,7 @@ export default async function Home() {
       </section>
 
       <section className="bg-primary py-12 text-white">
-        <div className="mx-auto flex w-full max-w-[1520px] flex-col gap-8 px-6 sm:px-8 md:px-12 lg:flex-row lg:items-center lg:justify-between lg:px-12 2xl:px-16">
+        <div className="mx-auto flex w-full max-w-[1760px] flex-col gap-8 px-6 sm:px-8 md:px-12 lg:flex-row lg:items-center lg:justify-between lg:px-12 2xl:px-20">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
             <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-3xl">
               🚀

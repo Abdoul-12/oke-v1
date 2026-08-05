@@ -123,7 +123,7 @@ export default async function EntreprisesPage() {
       </section>
 
       <section className="border-b border-border bg-white px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-[1520px] grid-cols-2 divide-x divide-border py-5 md:grid-cols-4">
+        <div className="mx-auto grid max-w-[1760px] grid-cols-2 divide-x divide-border py-5 md:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label} className="px-4 py-2 text-center">
               <p className="text-lg font-bold text-violet-600">{stat.value}</p>
@@ -134,7 +134,7 @@ export default async function EntreprisesPage() {
       </section>
 
       <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1520px]">
+        <div className="mx-auto max-w-[1760px]">
           <div className="text-center">
 
             <h2 className="mt-4 text-2xl font-bold text-dark sm:text-3xl">
@@ -164,7 +164,7 @@ export default async function EntreprisesPage() {
       </section>
 
       <section className="bg-light px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1520px]">
+        <div className="mx-auto max-w-[1760px]">
           <div className="text-center">
 
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-violet-600">
@@ -240,7 +240,7 @@ export default async function EntreprisesPage() {
       </section>
 
       <section className="bg-violet-600 px-4 py-8 text-white sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-[1520px] flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
+        <div className="mx-auto flex max-w-[1760px] flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
           <p className="text-base font-semibold sm:text-lg">
             Rejoins OkeTech et trouve les talents qu&apos;il te faut dès aujourd&apos;hui
           </p>

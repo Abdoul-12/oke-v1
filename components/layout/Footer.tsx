@@ -31,7 +31,7 @@ const colonnes = [
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-dark text-white">
-      <div className="mx-auto w-full max-w-[1520px] px-6 py-8 sm:px-8 md:px-12 md:py-9 lg:px-12 2xl:px-16">
+      <div className="mx-auto w-full max-w-[1760px] px-6 py-8 sm:px-8 md:px-12 md:py-9 lg:px-12 2xl:px-20">
         <div className="grid gap-7 sm:grid-cols-2 md:gap-10 lg:grid-cols-[1.6fr_0.85fr_0.85fr_0.85fr] lg:gap-14">
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="group inline-flex items-center gap-2" aria-label="Accueil OkeTech">
