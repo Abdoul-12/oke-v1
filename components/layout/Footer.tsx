@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 const colonnes = [
   {
@@ -28,7 +31,13 @@ const colonnes = [
   },
 ]
 
+function estLienActif(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
+
 export default function Footer() {
+  const pathname = usePathname()
+
   return (
     <footer className="border-t border-white/10 bg-dark text-white">
       <div className="mx-auto w-full max-w-[1760px] px-6 py-8 sm:px-8 md:px-12 md:py-9 lg:px-12 2xl:px-20">
@@ -53,12 +62,21 @@ export default function Footer() {
                 <ul className="flex flex-col gap-2">
                   {colonne.liens.map((lien) => (
                     <li key={`${colonne.titre}-${lien.label}`}>
-                      <Link
-                        href={lien.href}
-                        className="inline-flex rounded-md py-1 text-sm leading-5 text-slate-400 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                      >
-                        {lien.label}
-                      </Link>
+                      {(() => {
+                        const actif = estLienActif(pathname, lien.href)
+
+                        return (
+                          <Link
+                            href={lien.href}
+                            aria-current={actif ? "page" : undefined}
+                            className={`inline-flex rounded-md py-1 text-sm leading-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
+                              actif ? "font-semibold text-primary" : "text-slate-400 hover:text-primary"
+                            }`}
+                          >
+                            {lien.label}
+                          </Link>
+                        )
+                      })()}
                     </li>
                   ))}
                 </ul>

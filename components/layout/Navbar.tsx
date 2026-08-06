@@ -24,6 +24,10 @@ const boutonConnexion =
 const boutonInscription =
   `${boutonBase} bg-primary text-white shadow-sm shadow-primary/20 hover:bg-[#0c7468] hover:shadow-md hover:shadow-primary/25`
 
+function estLienActif(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
+
 export default function Navbar() {
   const pathname = usePathname()
   const [menuOuvert, setMenuOuvert] = useState(false)
@@ -96,16 +100,23 @@ export default function Navbar() {
         </Link>
 
         <ul className="hidden items-center gap-9 md:flex">
-          {liens.map((lien) => (
-            <li key={lien.href}>
-              <Link
-                href={lien.href}
-                className="relative inline-flex py-2 text-sm font-semibold text-muted transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-primary after:transition-all after:duration-200 hover:text-primary hover:after:w-full"
-              >
-                {lien.label}
-              </Link>
-            </li>
-          ))}
+          {liens.map((lien) => {
+            const actif = estLienActif(pathname, lien.href)
+
+            return (
+              <li key={lien.href}>
+                <Link
+                  href={lien.href}
+                  aria-current={actif ? "page" : undefined}
+                  className={`relative inline-flex py-2 text-sm font-semibold transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-primary after:transition-all after:duration-200 hover:text-primary hover:after:w-full ${
+                    actif ? "text-primary after:w-full" : "text-muted after:w-0"
+                  }`}
+                >
+                  {lien.label}
+                </Link>
+              </li>
+            )
+          })}
         </ul>
 
         {pagePrivee || !sessionChargee ? (
@@ -142,17 +153,24 @@ export default function Navbar() {
         <div className="border-t border-border bg-white shadow-lg shadow-slate-900/5 md:hidden">
           <div className="mx-auto w-full max-w-[1760px] px-6 py-5 sm:px-8 md:px-12 lg:px-12 2xl:px-20">
             <ul className="flex flex-col gap-4" aria-label="Navigation mobile">
-              {liens.map((lien) => (
-                <li key={lien.href}>
-                  <Link
-                    href={lien.href}
-                    className="flex min-h-10 items-center rounded-lg px-3 text-sm font-semibold text-muted transition-colors hover:bg-primary/10 hover:text-primary"
-                    onClick={() => setMenuOuvert(false)}
-                  >
-                    {lien.label}
-                  </Link>
-                </li>
-              ))}
+              {liens.map((lien) => {
+                const actif = estLienActif(pathname, lien.href)
+
+                return (
+                  <li key={lien.href}>
+                    <Link
+                      href={lien.href}
+                      aria-current={actif ? "page" : undefined}
+                      className={`flex min-h-10 items-center rounded-lg px-3 text-sm font-semibold transition-colors hover:bg-primary/10 hover:text-primary ${
+                        actif ? "bg-primary/10 text-primary" : "text-muted"
+                      }`}
+                      onClick={() => setMenuOuvert(false)}
+                    >
+                      {lien.label}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
 
             {!pagePrivee && connecte && (
