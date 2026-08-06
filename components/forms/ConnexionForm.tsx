@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { FormEvent, useState } from "react"
-import { createClient } from "@/lib/supabase/client"
 import { sanitizeText, validateEmail, validatePassword } from "@/lib/security/input"
 
 function EyeIcon({ ouvert }: { ouvert: boolean }) {
@@ -57,36 +56,24 @@ export default function ConnexionForm() {
     setChargement(true)
 
     try {
-      const supabase = createClient()
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.value,
-        password: password.value,
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.value,
+          password: password.value,
+        }),
       })
 
-      if (error) {
-        const message = error.message.toLowerCase()
-
-        if (message.includes("email not confirmed") || message.includes("confirm")) {
-          setMessageErreur("Votre compte existe, mais l'email n'est pas encore confirmé dans Supabase.")
-          return
-        }
-
-        setMessageErreur("Identifiants incorrects. Vérifiez votre email et votre mot de passe.")
+      if (!response.ok) {
+        const result = (await response.json().catch(() => null)) as { message?: string } | null
+        setMessageErreur(result?.message ?? "Connexion impossible pour le moment.")
         return
       }
 
-      if (!data.user) {
-        setMessageErreur("Connexion impossible pour le moment.")
-        return
-      }
-
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", data.user.id)
-        .single()
-
-      const role = profile?.role
+      const result = (await response.json()) as { dashboard?: string }
       const redirect = sanitizeText(new URLSearchParams(window.location.search).get("redirect"), 120)
 
       if (redirect.startsWith("/") && !redirect.startsWith("//")) {
@@ -95,12 +82,7 @@ export default function ConnexionForm() {
         return
       }
 
-      if (role === "developpeur" || role === "investisseur" || role === "entreprise") {
-        router.push(`/dashboard/${role}`)
-      } else {
-        router.push("/")
-      }
-
+      router.push(result.dashboard ?? "/")
       router.refresh()
     } catch (error) {
       setMessageErreur(error instanceof Error ? error.message : "Connexion impossible pour le moment.")

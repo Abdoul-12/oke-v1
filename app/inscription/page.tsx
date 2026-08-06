@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import { FormEvent, useMemo, useState } from "react"
 import DeveloperTypeSelect, { typesDeveloppeur } from "@/components/ui/DeveloperTypeSelect"
 import SkillsSelector from "@/components/ui/SkillsSelector"
-import { createClient } from "@/lib/supabase/client"
 import {
   sanitizeText,
   validateEmail,
@@ -299,7 +298,6 @@ export default function InscriptionPage() {
     }
 
     try {
-      const supabase = createClient()
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
@@ -325,13 +323,20 @@ export default function InscriptionPage() {
         return
       }
 
-      const { error } = await supabase.auth.signInWithPassword({
-        email: donnees.email,
-        password: motDePasseFinal,
+      const loginResponse = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: donnees.email,
+          password: motDePasseFinal,
+        }),
       })
 
-      if (error) {
-        setErreur(error.message)
+      if (!loginResponse.ok) {
+        const result = (await loginResponse.json().catch(() => null)) as { message?: string } | null
+        setErreur(result?.message ?? "Compte créé, mais connexion automatique impossible.")
         return
       }
 
